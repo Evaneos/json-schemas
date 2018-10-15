@@ -1,0 +1,270 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://raw.githubusercontent.com/Evaneos/json-schemas/master/MANIFEST/MANIFEST-v1.0.0.schema.json",
+    "title": "Evaneos Information System Manifest",
+    "description": "A document describing dependencies for services deployed by Evaneos",
+    "type": "object",
+    "properties": {
+        "type": {
+            "description": "The type of service described",
+            "type": "string",
+            "enum": [ "application", "bundle" ]
+        },
+        "name": {
+            "description": "The name of the service described",
+            "type": "string"
+        },
+        "description": {
+            "description": "The description of the service described",
+            "type": "string"
+        },
+        "criticality": {
+            "description": "The criticality of the service described",
+            "type": "string",
+            "enum": [ "low", "medium", "high" ]
+        },
+        "load": {
+            "description": "The load of the service described",
+            "type": "string",
+            "enum": [ "low", "medium", "high" ]
+        },
+        "languages": {
+            "description": "The languages used in the service",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "description": "The name of the language",
+                        "type": "string",
+                        "enum": [ "php", "javascript", "node", "typescript", "flow", "ruby", "python", "java", "kotlin", "objective-c" ]
+                    },
+                    "version": {
+                        "description": "The version of the language used",
+                        "type": "string"
+                    },
+                    "frameworks": {
+                        "description": "The frameworks of the language used in the service",
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "description": "The name of the framework",
+                                    "type": "string"
+                                },
+                                "package": {
+                                    "description": "The package of the framework on the dependency manager repository",
+                                    "type": "string"
+                                }
+                            },
+                            "required": [ "name" ]
+                        }
+                    }
+                },
+                "required": [ "name" ]
+            },
+            "minItems": 1
+        },
+        "services": {
+            "description": "All the services the current service depends on",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "The id of the service. This is the key you'll have to use when referencing it.",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "The type of the service",
+                        "type": "string",
+                        "enum": [ "http-server", "database", "message-queue", "key-value-store", "external-api", "application", "bundle" ]
+                    },
+                    "description": {
+                        "description": "The description of the service",
+                        "type": "string"
+                    },
+                    "metadata": {
+                        "description": "The metadata for the service",
+                        "type": "object",
+
+                        "TODO": "add description"
+
+                    }
+                },
+                "required": [ "id", "type", "metadata" ]
+            },
+            "minItems": 1
+        },
+        "domains": {
+            "description": "The domains directly embedded in the application (eg. not those from a bundle)",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "description": "The name of the domain. This is the key you'll have tu use when referencing it.",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "The type of domain it is.",
+                        "type": "string",
+                        "enum": [ "core", "support" ]
+                    },
+                    "description": {
+                        "description": "The description of the domain",
+                        "type": "string"
+                    }
+                },
+                "required": [ "name", "type" ]
+            }
+        },
+        "infrastructure": {
+            "description": "The infrastructure information to support the service",
+            "type": "object",
+            "properties": {
+                "http": {
+                    "description": "The http-related information",
+                    "type": "object",
+                    "properties": {
+                        "hosts": {
+                            "description": "The hosts the service responds to",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "required": [ "hosts" ]
+                }
+            },
+            "required": [ "http" ]
+        },
+        "deploy": {
+            "description": "The way the service is deployed",
+            "type": "object",
+            "properties": {
+                "method": {
+                    "description": "The method of deployment",
+                    "type": "string",
+                    "enum": [ "typhon", "travis", "concourse", "jenkins", "digital-ocean" ]
+                },
+                "target": {
+                    "description": "The target platform for deployment",
+                    "type": "string",
+                    "enum": [ "typhon", "gke", "aws", "digital-ocean" ]
+                }
+            },
+            "required": [ "method", "target" ]
+        },
+        "messages": {
+            "description": "The messages produced or received by the service.",
+            "type": "object",
+            "properties": {
+                "outbound": {
+                    "description": "The messages produced by the service",
+                    "type": "object",
+                    "properties": {
+                        "events": {
+                            "description": "The events produced by the service",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "description": "The name of the event being produced. It is its identifier inside its domain.",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "The description of the event",
+                                        "type": "string"
+                                    },
+                                    "domain": {
+                                        "description": "The domain the event comes from. The name of the domain used here should be listed exactly as declared in a `domain` description field",
+                                        "type": "string"
+                                    },
+                                    "dispatch": {
+                                        "description": "How the event is dispatched",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "description": "The type of dispatch used",
+                                                    "type": "string",
+                                                    "enum": [ "local", "message-queue" ]
+                                                },
+                                                "metadata": {
+                                                    "description": "The metadata of the dispatch",
+                                                    "type": "object",
+
+                                                    "TODO": "describe the object"
+                                                }
+                                            },
+                                            "required": [ "type", "metadata" ]
+                                        }
+                                    }
+                                },
+                                "required": [ "name", "description", "domain", "dispatch" ]
+                            }
+                        }
+                    },
+                    "required": [ "events" ]
+                },
+                "inbound": {
+                    "description": "The messages produced by the service",
+                    "type": "object",
+                    "properties": {
+                        "events": {
+                            "description": "The events produced by the service",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "description": "The name of the event being produced. It is its identifier inside its domain.",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "The description of the event",
+                                        "type": "string"
+                                    },
+                                    "domain": {
+                                        "description": "The domain the event comes from. The name of the domain used here should be listed exactly as declared in a `domain` description field",
+                                        "type": "string"
+                                    },
+                                    "consumption": {
+                                        "description": "How the event is consumed",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "description": "The type of dispatch used",
+                                                    "type": "string",
+                                                    "enum": [ "local", "message-queue" ]
+                                                },
+                                                "metadata": {
+                                                    "description": "The metadata of the consumption",
+                                                    "type": "object",
+
+                                                    "TODO": "describe the object"
+                                                }
+                                            },
+                                            "required": [ "type", "metadata" ]
+                                        }
+                                    }
+                                },
+                                "required": [ "name", "description", "domain", "consumption" ]
+                            }
+                        }
+                    },
+                    "required": [ "events" ]
+                }
+            },
+            "required": [ "outbound", "inbound" ]
+        }
+    },
+    "required": [ "type", "name", "description", "criticality", "load", "languages", "services", "domains", "infrastructure", "deploy", "messages" ]
+}
