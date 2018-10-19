@@ -79,7 +79,7 @@
                     "type": {
                         "description": "The type of the service",
                         "type": "string",
-                        "enum": [ "http-server", "database", "message-queue", "key-value-store", "external-api", "application", "bundle" ]
+                        "enum": [ "http-server", "database", "message-queue", "key-value-store", "external-api", "application", "bundle", "http-cache", "cdn" ]
                     },
                     "description": {
                         "description": "The description of the service",
@@ -88,9 +88,25 @@
                     "metadata": {
                         "description": "The metadata for the service",
                         "type": "object",
-
-                        "TODO": "add description"
-
+                        "properties": {
+                            "engine": {
+                                "description": "The engine of the service (when applicable)",
+                                "type": "string",
+                                "enum": [ "postgres", "mongodb", "neo4j", "redis", "memcached", "rabbitmq", "nginx", "varnish" ]
+                            },
+                            "databases": {
+                                "description": "Only for `database` type services. The databases used",
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "protocol": {
+                                "description": "The protocol the dependency relies on",
+                                "type": "string",
+                                "enum": [ "amqp", "https", "http" ]
+                            }
+                        }
                     }
                 },
                 "required": [ "id", "type", "metadata" ]
@@ -198,8 +214,20 @@
                                                 "metadata": {
                                                     "description": "The metadata of the dispatch",
                                                     "type": "object",
-
-                                                    "TODO": "describe the object"
+                                                    "properties": {
+                                                        "service": {
+                                                            "description": "Used for `message-queue` type only. The service it is dispatched to. It must reference an id declared in `services`",
+                                                            "type": "string"
+                                                        },
+                                                        "target": {
+                                                            "description": "Used for `message-queue` type only. The target exchange in the target service.",
+                                                            "type": "string"
+                                                        },
+                                                        "usage": {
+                                                            "description": "Used for `local` type only. The reason it is dispatched locally",
+                                                            "type": "string"
+                                                        }
+                                                    }
                                                 }
                                             },
                                             "required": [ "type", "metadata" ]
@@ -243,13 +271,26 @@
                                                 "type": {
                                                     "description": "The type of dispatch used",
                                                     "type": "string",
-                                                    "enum": [ "local", "message-queue" ]
+                                                    "enum": [ "message-queue" ]
                                                 },
                                                 "metadata": {
                                                     "description": "The metadata of the consumption",
                                                     "type": "object",
-
-                                                    "TODO": "describe the object"
+                                                    "properties": {
+                                                        "service": {
+                                                            "description": "The message-queue service used. It must reference an id declared in `services`",
+                                                            "type": "string"
+                                                        },
+                                                        "queue": {
+                                                            "description": "The name of the queue it is consumed from",
+                                                            "type": "string"
+                                                        },
+                                                        "entryPoint": {
+                                                            "description": "The entry point of the script consuming the events",
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [ "service", "queue", "entryPoint" ]
                                                 }
                                             },
                                             "required": [ "type", "metadata" ]
