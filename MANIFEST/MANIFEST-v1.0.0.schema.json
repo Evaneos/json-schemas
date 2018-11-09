@@ -307,5 +307,5 @@
             "required": [ "outbound", "inbound" ]
         }
     },
-    "required": [ "type", "name", "description", "criticality", "load", "languages", "services", "domains", "infrastructure", "deploy", "messages" ]
+    "required": [ "type", "name", "description", "criticality", "load", "languages", "services", "domains", "messages" ]
 }
