@@ -66,6 +66,29 @@
             },
             "minItems": 1
         },
+        "entryPoints": {
+            "description": "How the application / bundle is accessed",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "file": {
+                        "description": "The path of the file used as entryPoint",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "The type of the entry point",
+                        "type": "string",
+                        "enum": [ "http", "cli" ]
+                    },
+                    "description": {
+                        "description": "Description of the entryPoint",
+                        "type": "string"
+                    }
+                },
+                "required": [ "file", "type" ]
+            }
+        },
         "services": {
             "description": "All the services the current service depends on",
             "type": "array",
@@ -287,6 +310,10 @@
                                                         },
                                                         "entryPoint": {
                                                             "description": "The entry point of the script consuming the events",
+                                                            "type": "string"
+                                                        },
+                                                        "arguments": {
+                                                            "description": "The arguments passed to the entryPoint",
                                                             "type": "string"
                                                         }
                                                     },
