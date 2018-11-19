@@ -187,7 +187,7 @@
                 "method": {
                     "description": "The method of deployment",
                     "type": "string",
-                    "enum": [ "typhon", "travis", "concourse", "jenkins", "digital-ocean" ]
+                    "enum": [ "fabric", "travis", "concourse", "jenkins", "digital-ocean", "helm" ]
                 },
                 "target": {
                     "description": "The target platform for deployment",
