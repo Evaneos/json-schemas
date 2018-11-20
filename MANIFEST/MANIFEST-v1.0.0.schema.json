@@ -115,7 +115,7 @@
                             "engine": {
                                 "description": "The engine of the service (when applicable)",
                                 "type": "string",
-                                "enum": [ "postgres", "mongodb", "neo4j", "redis", "memcached", "rabbitmq", "nginx", "varnish" ]
+                                "enum": [ "postgres", "mongodb", "neo4j", "redis", "memcached", "rabbitmq", "nginx", "varnish", "firestore" ]
                             },
                             "databases": {
                                 "description": "Only for `database` type services. The databases used",
@@ -127,7 +127,7 @@
                             "protocol": {
                                 "description": "The protocol the dependency relies on",
                                 "type": "string",
-                                "enum": [ "amqp", "https", "http", "rpc" ]
+                                "enum": [ "amqp", "https", "http", "rpc", "grpc" ]
                             }
                         }
                     }
