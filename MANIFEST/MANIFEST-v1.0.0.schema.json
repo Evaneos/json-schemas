@@ -127,7 +127,7 @@
                             "protocol": {
                                 "description": "The protocol the dependency relies on",
                                 "type": "string",
-                                "enum": [ "amqp", "https", "http" ]
+                                "enum": [ "amqp", "https", "http", "rpc" ]
                             }
                         }
                     }
