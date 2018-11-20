@@ -37,7 +37,7 @@
                     "name": {
                         "description": "The name of the language",
                         "type": "string",
-                        "enum": [ "php", "javascript", "node", "typescript", "flow", "ruby", "python", "java", "kotlin", "objective-c" ]
+                        "enum": [ "php", "javascript", "node", "typescript", "flow", "ruby", "python", "java", "kotlin", "objective-c", "swift" ]
                     },
                     "version": {
                         "description": "The version of the language used",
