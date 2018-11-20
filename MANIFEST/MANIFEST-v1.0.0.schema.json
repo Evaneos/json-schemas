@@ -187,12 +187,12 @@
                 "method": {
                     "description": "The method of deployment",
                     "type": "string",
-                    "enum": [ "fabric", "travis", "concourse", "jenkins", "digital-ocean", "helm", "bitrise" ]
+                    "enum": [ "fabric", "travis", "concourse", "jenkins", "digital-ocean", "helm", "bitrise", "ftp" ]
                 },
                 "target": {
                     "description": "The target platform for deployment",
                     "type": "string",
-                    "enum": [ "typhon", "gke", "aws", "digital-ocean", "app-store-connect", "google-play-store" ]
+                    "enum": [ "typhon", "gke", "aws", "digital-ocean", "app-store-connect", "google-play-store", "online-net" ]
                 }
             },
             "required": [ "method", "target" ]
