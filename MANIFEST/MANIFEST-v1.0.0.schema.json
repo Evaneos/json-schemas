@@ -115,7 +115,7 @@
                             "engine": {
                                 "description": "The engine of the service (when applicable)",
                                 "type": "string",
-                                "enum": [ "postgres", "mongodb", "neo4j", "redis", "memcached", "rabbitmq", "nginx", "varnish", "firestore" ]
+                                "enum": [ "postgres", "mongodb", "neo4j", "redis", "memcached", "rabbitmq", "nginx", "varnish", "firestore", "google-datastore" ]
                             },
                             "databases": {
                                 "description": "Only for `database` type services. The databases used",
