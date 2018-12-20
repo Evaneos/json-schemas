@@ -264,17 +264,17 @@
                     "required": [ "events" ]
                 },
                 "inbound": {
-                    "description": "The messages produced by the service",
+                    "description": "The messages consumed by the service",
                     "type": "object",
                     "properties": {
                         "events": {
-                            "description": "The events produced by the service",
+                            "description": "The events consumed by the service",
                             "type": "array",
                             "items": {
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "The name of the event being produced. It is its identifier inside its domain.",
+                                        "description": "The name of the event being consumed. It is its identifier inside its domain.",
                                         "type": "string"
                                     },
                                     "description": {
@@ -292,7 +292,7 @@
                                             "type": "object",
                                             "properties": {
                                                 "type": {
-                                                    "description": "The type of dispatch used",
+                                                    "description": "The type of provenance of the incoming event",
                                                     "type": "string",
                                                     "enum": [ "message-queue" ]
                                                 },
